@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: ms_catalogo
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/ms_catalogo
+    username: root
+    password:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
+    path: /doc/swagger-ui.html
