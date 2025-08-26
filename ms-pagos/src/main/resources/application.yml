@@ -1,6 +1,6 @@
 spring:
   application:
-    name: ms-ventas
+    name: ms-pagos
   profiles:
     active: development
   config:
