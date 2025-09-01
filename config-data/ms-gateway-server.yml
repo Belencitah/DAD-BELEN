@@ -1,5 +1,5 @@
 server:
-  port: 8086
+  port: 9090
 
 eureka:
   client:
@@ -8,21 +8,23 @@ eureka:
   instance:
     hostname: localhost
 
-
 spring:
+  application:
+    name: ms-gateway-server
+
   cloud:
     gateway:
-      discovery:
-        locator:
-          enabled: true
       server:
         webflux:
+          discovery:
+            locator:
+              enabled: true
+              lower-case-service-id: true
           routes:
             - id: ms-catalogo
               uri: lb://ms-catalogo
               predicates:
                 - Path=/categoria/**
-            - id: ms-clientes
-              uri: lb://ms-clientes
-              predicates:
-                - Path=/categoria/**
+              # Si tu servicio real no expone /categoria/...:
+              # filters:
+              #   - StripPrefix=1
