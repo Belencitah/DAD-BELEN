@@ -1,4 +1,5 @@
-
+server:
+  port: 8086
 
 eureka:
   client:
@@ -10,18 +11,18 @@ eureka:
 
 spring:
   cloud:
-
-
     gateway:
       discovery:
         locator:
-          enable: true
-      routes:
-        - id: ms-catalogo
-          uri: lb://ms-catalogo
-          predicates:
-            - Path=/categoria/**
-        - id: ms-clientes
-          uri: lb://ms-clientes
-          predicates:
-            - Path=/categoria/**
+          enabled: true
+      server:
+        webflux:
+          routes:
+            - id: ms-catalogo
+              uri: lb://ms-catalogo
+              predicates:
+                - Path=/categoria/**
+            - id: ms-clientes
+              uri: lb://ms-clientes
+              predicates:
+                - Path=/categoria/**
