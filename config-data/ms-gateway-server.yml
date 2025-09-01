@@ -28,3 +28,7 @@ spring:
               # Si tu servicio real no expone /categoria/...:
               # filters:
               #   - StripPrefix=1
+            - id: ms-clientes
+              uri: lb://ms-clientes
+              predicates:
+                - Path=/clientes/**
