@@ -39,4 +39,4 @@ spring:
             - id: ms-ventas
               uri: lb://ms-ventas
               predicates:
-                - Path=//api/sales/**
+                - Path=/api/sales/**
