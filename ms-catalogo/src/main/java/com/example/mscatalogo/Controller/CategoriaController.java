@@ -20,8 +20,8 @@ public class CategoriaController {
     }
 
     @GetMapping("/{id}")
-    public Optional<Categoria> buscarPorId(@PathVariable Integer id) {
-        return categoriaService.buscarPorId(id);
+    public Categoria buscarPorId(@PathVariable Integer id) {
+        return categoriaService.buscarPorId(id).get();
     }
 
     @PostMapping
