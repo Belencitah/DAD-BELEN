@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
-@RequestMapping("/api/sales")
+@RequestMapping("/sales")
 @RequiredArgsConstructor
 public class SaleController {
 
