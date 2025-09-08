@@ -1,6 +1,13 @@
 package org.example.msventas.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.example.msventas.dto.ClientesDto;
+import org.example.msventas.dto.VentasDto;
+import org.example.msventas.entity.Sale;
+import org.example.msventas.feign.ClienteFeign;
+import org.example.msventas.mappers.SaleMapper;
+import org.example.msventas.repository.SaleRepository;
+import org.example.msventas.service.SaleService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -14,25 +21,33 @@ import java.time.LocalDateTime;
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class SaleServiceImpl implements org.example.msventas.service.SaleService {
+public class SaleServiceImpl implements SaleService {
 
-    private final org.example.msventas.repository.SaleRepository repository;
+    private final SaleRepository repository;
+    private final ClienteFeign clienteFeign;
+
+    // ====== CRUD ======
 
     @Override
     @Transactional(readOnly = true)
-    public Page<org.example.msventas.entity.Sale> findAll(Pageable pageable) {
+    public Page<Sale> findAll(Pageable pageable) {
         return repository.findAll(pageable);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public org.example.msventas.entity.Sale findById(Long id) {
-        return repository.findById(id)
+    public VentasDto findById(Long id) {
+        Sale sale = repository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Sale not found"));
+
+        // Consumir microservicio de clientes
+        ClientesDto cliente = clienteFeign.findById(sale.getCustomerId()).getBody();
+
+        return SaleMapper.toDto(sale, cliente);
     }
 
     @Override
-    public org.example.msventas.entity.Sale create(org.example.msventas.entity.Sale sale) {
+    public Sale create(Sale sale) {
         basicChecks(sale);
         if (sale.getSaleDate() == null) {
             sale.setSaleDate(LocalDateTime.now());
@@ -41,9 +56,10 @@ public class SaleServiceImpl implements org.example.msventas.service.SaleService
     }
 
     @Override
-    public org.example.msventas.entity.Sale update(Long id, org.example.msventas.entity.Sale data) {
+    public Sale update(Long id, Sale data) {
         basicChecks(data);
-        org.example.msventas.entity.Sale current = findById(id);
+        Sale current = repository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Sale not found"));
 
         current.setCustomerId(data.getCustomerId());
         current.setSaleDate(data.getSaleDate() != null ? data.getSaleDate() : current.getSaleDate());
@@ -56,12 +72,13 @@ public class SaleServiceImpl implements org.example.msventas.service.SaleService
 
     @Override
     public void delete(Long id) {
-        org.example.msventas.entity.Sale existing = findById(id);
+        Sale existing = repository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Sale not found"));
         repository.delete(existing);
     }
 
     // ===== Helpers (sin jakarta.validation) =====
-    private void basicChecks(org.example.msventas.entity.Sale s) {
+    private void basicChecks(Sale s) {
         if (s.getCustomerId() == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "customerId is required");
         }
