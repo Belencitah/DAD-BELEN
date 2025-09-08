@@ -1,7 +1,7 @@
 package org.example.msventas.controller;
 
-
 import lombok.RequiredArgsConstructor;
+import org.example.msventas.dto.VentasDto;
 import org.example.msventas.entity.Sale;
 import org.example.msventas.service.SaleService;
 import org.springframework.data.domain.Page;
@@ -23,7 +23,7 @@ public class SaleController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Sale> findById(@PathVariable Long id) {
+    public ResponseEntity<VentasDto> findById(@PathVariable Long id) {
         return ResponseEntity.ok(service.findById(id));
     }
 
@@ -32,7 +32,7 @@ public class SaleController {
                                        UriComponentsBuilder uriBuilder) {
         Sale saved = service.create(sale);
         return ResponseEntity
-                .created(uriBuilder.path("/api/sales/{id}").buildAndExpand(saved.getId()).toUri())
+                .created(uriBuilder.path("/sales/{id}").buildAndExpand(saved.getId()).toUri())
                 .body(saved);
     }
 

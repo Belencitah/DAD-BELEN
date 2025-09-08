@@ -47,5 +47,4 @@ public class Sale {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    private ClientesDto clientes;
 }

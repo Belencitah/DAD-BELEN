@@ -41,7 +41,7 @@ public class SaleServiceImpl implements SaleService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Sale not found"));
 
         // Consumir microservicio de clientes
-        ClientesDto cliente = clienteFeign.findById(sale.getCustomerId()).getBody();
+        ClientesDto cliente = clienteFeign.findById(sale.getCustomerId());
 
         return SaleMapper.toDto(sale, cliente);
     }
