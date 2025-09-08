@@ -3,6 +3,7 @@ package org.example.msventas.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.example.msventas.dto.ClientesDto;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -45,4 +46,6 @@ public class Sale {
     @UpdateTimestamp
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
+    private ClientesDto clientes;
 }
