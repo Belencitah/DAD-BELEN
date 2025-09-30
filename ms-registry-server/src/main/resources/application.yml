@@ -1,7 +1,18 @@
+server:
+  port: 8090
+
 spring:
   application:
     name: ms-registry-server
-  profiles:
-    active: development
   config:
     import: optional:configserver:http://root:123456@localhost:7071
+
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    # Un Eureka Server NO debe registrarse ni hacer fetch de peers en single-node
+    register-with-eureka: false
+    fetch-registry: false
+    service-url:
+      defaultZone: http://localhost:${server.port}/eureka/

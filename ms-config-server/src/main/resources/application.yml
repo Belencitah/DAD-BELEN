@@ -9,7 +9,7 @@ spring:
         git:
           uri: https://github.com/Belencitah/DAD-BELEN.git # ruta del repositorio git
           searchPaths: config-data
-          default-label: circuit
+          default-label: circuitbreaker
   security:
     user:
       name: root
