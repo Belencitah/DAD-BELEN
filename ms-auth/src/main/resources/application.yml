@@ -4,7 +4,7 @@ spring:
   profiles:
     active: development
   config:
-    import: optional:configserver:http://root:1234567@localhost:7070
+    import: optional:configserver:http://root:123456@localhost:7071
   autoconfigure:
     exclude:
       - org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
