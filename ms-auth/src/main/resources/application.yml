@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: ms-auth
+  profiles:
+    active: development
+  config:
+    import: optional:configserver:http://root:1234567@localhost:7070
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
+jwt:
+  secret: secret
