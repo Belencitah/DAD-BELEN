@@ -5,7 +5,6 @@ import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.server.ServerWebExchange;
@@ -40,7 +39,7 @@ public class AuthFilter extends AbstractGatewayFilterFactory<AuthFilter.Config> 
 
             return webClient.build()
                     .post()
-                    .uri("http://localhost:9090/auth/validate")
+                    .uri("http://ms-auth/auth/validate?token=")
                     .header(HttpHeaders.AUTHORIZATION, "Bearer " + token) // 🔹 se envía por header
                     .retrieve()
                     .bodyToMono(TokenDto.class)
