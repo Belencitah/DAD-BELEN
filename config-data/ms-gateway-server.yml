@@ -36,19 +36,30 @@ spring:
               uri: lb://ms-clientes
               predicates:
                 - Path=/clientes/**
+              filters:
+                - AuthFilter
             - id: ms-pagos
               uri: lb://ms-pagos
               predicates:
                 - Path=/payments/**
+              filters:
+                - AuthFilter
+
             - id: ms-ventas
               uri: lb://ms-ventas
               predicates:
                 - Path=/sales/**
+              filters:
+                - AuthFilter
             - id: ms-producto
               uri: lb://ms-producto
               predicates:
                 - Path=/producto/**
+              filters:
+                - AuthFilter
             - id: ms-auth
               uri: lb://ms-auth
               predicates:
                 - Path=/auth/**
+              filters:
+                - AuthFilter
