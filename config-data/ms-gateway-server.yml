@@ -16,6 +16,16 @@ spring:
 
   cloud:
     gateway:
+      globals:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "http://localhost:4200"
+            allowedHeaders: "*"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
       server:
         webflux:
           discovery:
